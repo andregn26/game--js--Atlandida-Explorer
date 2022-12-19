@@ -62,21 +62,22 @@ window.addEventListener("load", function () {
       this.y = 100
       this.speedY = 0
       this.speedX = 0
-      this.maxSpeed = 1
+      this.maxSpeedY = 0.1
+      this.maxSpeedX = 0.3
       this.projectiles = []
     }
     update() {
       if (this.game.keys.includes("ArrowUp")) {
-        this.speedY += -0.01
+        this.speedY += -this.maxSpeedY
       } else if (this.game.keys.includes("ArrowDown")) {
-        this.speedY += 0.01
+        this.speedY += this.maxSpeedY
       } else {
         this.speedY = 0
       }
       if (this.game.keys.includes("ArrowLeft")) {
-        this.speedX += -0.03
+        this.speedX += -this.maxSpeedX
       } else if (this.game.keys.includes("ArrowRight")) {
-        this.speedX += 0.03
+        this.speedX += this.maxSpeedX
       } else {
         this.speedX = 0
       }
@@ -111,6 +112,8 @@ window.addEventListener("load", function () {
       this.x = this.game.width
       this.speedX = Math.random() * -1.5 - 0.5
       this.markedForDeletion = false
+      this.lives = 5
+      this.score = this.lives
     }
     update() {
       this.x += this.speedX
@@ -121,6 +124,9 @@ window.addEventListener("load", function () {
     draw(context) {
       context.fillStyle = "red"
       context.fillRect(this.x, this.y, this.width, this.height)
+      context.fillStyle = "black"
+      context.font = "20px Helvetica"
+      context.fillText(this.lives, this.x, this.y)
     }
   }
   class Angler1 extends Enemy {
@@ -141,11 +147,53 @@ window.addEventListener("load", function () {
       this.color = "white"
     }
     draw(context) {
+      // score
+      context.save()
+      context.shadowOffsetX = 2
+      context.shadowOffsetY = 2
+      context.shadowColor = "black"
+      context.fillStyle = this.color
+      context.font = `${this.fontSize}px ${this.fontFamlily}`
+      context.fillText(`Score ${this.game.score}`, 20, 40)
+
       //amo
       context.fillStyle = this.color
       for (let i = 0; i < this.game.ammo; i++) {
-        context.fillRect(5 * i, 50, 3, 20)
+        context.fillRect(5 * i + 20, 50, 3, 20)
       }
+
+      //Timer
+      const formattedTime = (this.game.gameTime * 0.001).toFixed(1)
+      context.fillText(formattedTime, 20, 100)
+
+      //Game Over
+      if (this.game.gameOver) {
+        context.textAlign = "center"
+        let message1
+        let message2
+        if (this.game.score > this.game.winningScore) {
+          context.textAlign = "center"
+          message1 = "You Won!"
+          message2 = `well done! You destroyed ${this.game.score / 5} enemies`
+        } else {
+          message1 = "You Loose"
+          message2 = `try again `
+        }
+        context.font = `50px ${this.fontFamily}`
+        context.fillText(
+          message1,
+          this.game.width * 0.5,
+          this.game.height * 0.5 - 40
+        )
+        context.font = `25px ${this.fontFamily}`
+        context.fillText(
+          message2,
+          this.game.width * 0.5,
+          this.game.height * 0.5 + 40
+        )
+      }
+
+      context.restore()
     }
   }
   class Game {
@@ -165,8 +213,18 @@ window.addEventListener("load", function () {
       this.enemyTimer = 0
       this.enemyInterval = 1000
       this.gameOver = false
+      this.score = 0
+      this.winningScore = 10
+      this.gameTime = 0
+      this.timeLimit = 5000
     }
     update(deltaTime) {
+      if (!this.gameOver) {
+        this.gameTime += deltaTime
+      }
+      if (this.gameTime > this.timeLimit) {
+        this.gameOver = true
+      }
       this.player.update()
       if (this.ammoTimer > this.ammoInterval) {
         if (this.ammo < this.maxAmmo) this.ammo++
@@ -176,6 +234,24 @@ window.addEventListener("load", function () {
       }
       this.enemies.forEach((enemy) => {
         enemy.update()
+        if (this.checkCollision(this.player, enemy)) {
+          enemy.markedForDeletion = true
+        }
+        this.player.projectiles.forEach((projectile) => {
+          if (this.checkCollision(projectile, enemy)) {
+            enemy.lives--
+            projectile.markedForDeletion = true
+            if (enemy.lives <= 0) {
+              enemy.markedForDeletion = true
+              if (!this.gameOver) {
+                this.score += enemy.score
+              }
+              if (this.score > this.winningScore) {
+                this.gameOver = true
+              }
+            }
+          }
+        })
       })
       this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion)
       if (this.enemyTimer > this.enemyInterval && !this.gameOver) {
@@ -192,6 +268,14 @@ window.addEventListener("load", function () {
     }
     addEnemy() {
       this.enemies.push(new Angler1(this))
+    }
+    checkCollision(rect1, rect2) {
+      return (
+        rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.height + rect1.y > rect2.y
+      )
     }
   }
   //! new keyword will look for class with that name. It will find it on line 32 and it will run its constructor method to create one new blank javascript object, and assign it values and properties based on the blueprint here on line 46
