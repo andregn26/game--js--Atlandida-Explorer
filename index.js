@@ -23,7 +23,6 @@ window.addEventListener("load", function () {
         } else if (e.key === "D" || e.key === "d") {
           this.game.debug = !this.game.debug
         }
-        // console.log(e)
       })
       window.addEventListener("keyup", (e) => {
         if (this.game.keys.indexOf(e.key) > -1) {
@@ -76,7 +75,7 @@ window.addEventListener("load", function () {
       this.angle = 0
       this.velocityOfAngle = Math.random() * 2 - 0.1
       this.bounced = 0
-      this.bottomBounceBoundary = Math.random() * 100 + 60
+      this.bottomBounceBoundary = Math.random() * 80 + 50
     }
     update() {
       this.angle += this.velocityOfAngle
@@ -204,7 +203,7 @@ window.addEventListener("load", function () {
         this.projectiles.push(
           new Projectile(this.game, this.x + 95, this.y + 35)
         )
-        console.log(this.projectiles)
+
         this.game.ammo--
       }
       if (this.powerUp) this.shootBottom()
@@ -219,7 +218,7 @@ window.addEventListener("load", function () {
     enterPowerUp() {
       this.powerUpTimer = 0
       this.powerUp = true
-      this.game.ammo = this.game.maxAmmo
+      if (this.game.ammo < this.game.maxAmmo) this.game.ammo = this.game.maxAmmo
     }
   }
   class Enemy {
@@ -421,7 +420,7 @@ window.addEventListener("load", function () {
       this.timeLimit = 60000
       this.speed = 1
       this.particles = []
-      this.debug = true
+      this.debug = false
     }
     update(deltaTime) {
       if (!this.gameOver) {
@@ -542,5 +541,4 @@ window.addEventListener("load", function () {
     requestAnimationFrame(animate)
   }
   animate(0)
-  // console.log(player)
 })
