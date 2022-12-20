@@ -1,7 +1,7 @@
 window.addEventListener("load", function () {
   const canvas = this.document.getElementById("canvas1")
   const ctx = canvas.getContext("2d")
-  canvas.width = 500
+  canvas.width = 1300
   canvas.height = 500
 
   //! we need to declare our classes in a specific order. Class declarations are hoisted in javascript but they stay uninitialized when hosted. That means while javascript will be able to find the reference for a class name we create, it cannot use the class before it is defined in the code.
@@ -58,7 +58,54 @@ window.addEventListener("load", function () {
       }
     }
   }
-  class Particle {}
+  class Particle {
+    constructor(game, x, y) {
+      this.game = game
+      this.x = x
+      this.y = y
+      this.image = document.getElementById("gears")
+      this.frameX = Math.floor(Math.random() * 3)
+      this.frameY = Math.floor(Math.random() * 3)
+      this.spriteSize = 50
+      this.sizeModifier = (Math.random() * 0.5 + 0.5).toFixed(1)
+      this.size = this.spriteSize * this.sizeModifier
+      this.speedX = Math.random() * 6 - 3
+      this.speedY = Math.random() * -15
+      this.gravity = 0.5
+      this.markedForDeletion = false
+      this.angle = 0
+      this.velocityOfAngle = Math.random() * 2 - 0.1
+      this.bounced = 0
+      this.bottomBounceBoundary = Math.random() * 100 + 60
+    }
+    update() {
+      this.angle += this.velocityOfAngle
+      this.speedY += this.gravity
+      this.x -= this.speedX
+      this.y += this.speedY
+      if (this.y > this.game.height + this.size || this.x < 0 - this.size)
+        this.markedForDeletion = true
+      if (
+        this.y > this.game.height - this.bottomBounceBoundary &&
+        this.bounced < 2
+      ) {
+        this.bounced = this.speedY *= -0.7
+      }
+    }
+    draw(context) {
+      context.drawImage(
+        this.image,
+        this.frameX * this.spriteSize,
+        this.frameY * this.spriteSize,
+        this.spriteSize,
+        this.spriteSize,
+        this.x,
+        this.y,
+        this.size,
+        this.size
+      )
+    }
+  }
   class Player {
     constructor(game) {
       this.game = game
@@ -369,6 +416,7 @@ window.addEventListener("load", function () {
       this.gameTime = 0
       this.timeLimit = 60000
       this.speed = 1
+      this.particles = []
       this.debug = true
     }
     update(deltaTime) {
@@ -380,6 +428,10 @@ window.addEventListener("load", function () {
       }
       this.background.update()
       this.background.layer4.update()
+      this.particles.forEach((particle) => particle.update())
+      this.particles = this.particles.filter(
+        (particle) => !particle.markedForDeletion
+      )
       this.player.update(deltaTime)
       if (this.ammoTimer > this.ammoInterval) {
         if (this.ammo < this.maxAmmo) this.ammo++
@@ -390,6 +442,15 @@ window.addEventListener("load", function () {
       this.enemies.forEach((enemy) => {
         enemy.update()
         if (this.checkCollision(this.player, enemy)) {
+          for (let i = 0; i < 10; i++) {
+            this.particles.push(
+              new Particle(
+                this,
+                enemy.x + enemy.width * 0.5,
+                enemy.y + enemy.height * 0.5
+              )
+            )
+          }
           enemy.markedForDeletion = true
           if (enemy.type === "lucky") {
             this.player.enterPowerUp()
@@ -398,9 +459,25 @@ window.addEventListener("load", function () {
         this.player.projectiles.forEach((projectile) => {
           if (this.checkCollision(projectile, enemy)) {
             enemy.lives--
+            this.particles.push(
+              new Particle(
+                this,
+                enemy.x + enemy.width * 0.5,
+                enemy.y + enemy.height * 0.5
+              )
+            )
             projectile.markedForDeletion = true
             if (enemy.lives <= 0) {
               enemy.markedForDeletion = true
+              for (let i = 0; i < 3; i++) {
+                this.particles.push(
+                  new Particle(
+                    this,
+                    enemy.x + enemy.width * 0.5,
+                    enemy.y + enemy.height * 0.5
+                  )
+                )
+              }
               if (!this.gameOver) {
                 this.score += enemy.score
               }
@@ -423,6 +500,7 @@ window.addEventListener("load", function () {
       this.background.draw(context)
       this.player.draw(context)
       this.ui.draw(context)
+      this.particles.forEach((particle) => particle.draw(context))
       this.enemies.forEach((enemy) => enemy.draw(context))
       this.background.layer4.draw(context)
     }
