@@ -351,6 +351,40 @@ window.addEventListener("load", function () {
       context.drawImage(this.image, this.x + this.width, this.y)
     }
   }
+
+  class Explosion {
+    constructor(game, x, y) {
+      this.game = game
+      this.frameX = 0
+      this.spriteHeight = 200
+      this.timer = 0
+      this.interval = 1000 / this.fps
+      this.fps = 15
+      this.markedForDeletion = false
+    }
+    update(deltaTime) {
+      this.frameX++
+    }
+    draw(context) {
+      context.drawImage(this.image, this.x, this.y)
+    }
+  }
+  class SmokeExplosion extends Explosion {
+    constructor(game, x, y) {
+      super(game)
+      this.image = document.getElementById("smokeExplosion")
+      this.spriteWidth = 200
+      this.width = this.spriteWidth
+      this.height = this.spriteHeight
+      this.x = x - this.width * 0.5
+      this.y = y - this.height * 0.5
+    }
+  }
+  class FireExplosion extends Explosion {
+    constructor(game, x, y) {
+      super(game)
+    }
+  }
   class Background {
     constructor(game) {
       this.game = game
@@ -452,6 +486,7 @@ window.addEventListener("load", function () {
       this.timeLimit = 60000
       this.speed = 1
       this.particles = []
+      this.explosions = []
       this.debug = false
     }
     update(deltaTime) {
@@ -463,17 +498,13 @@ window.addEventListener("load", function () {
       }
       this.background.update()
       this.background.layer4.update()
-      this.particles.forEach((particle) => particle.update())
-      this.particles = this.particles.filter(
-        (particle) => !particle.markedForDeletion
-      )
       this.player.update(deltaTime)
-      if (this.ammoTimer > this.ammoInterval) {
-        if (this.ammo < this.maxAmmo) this.ammo++
-        this.ammoTimer = 0
-      } else {
-        this.ammoTimer += deltaTime
-      }
+      //! Creating the PARTICLES array
+      this.createParticle()
+      //! Creating the EXPLOSIONS array
+      this.createExplosion()
+      //! Restore AMMO
+      this.restoreAmmo(deltaTime)
       this.enemies.forEach((enemy) => {
         enemy.update()
         if (this.checkCollision(this.player, enemy)) {
@@ -537,21 +568,22 @@ window.addEventListener("load", function () {
       })
       this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion)
       if (this.enemyTimer > this.enemyInterval && !this.gameOver) {
-        this.addEnemy()
+        this.createEnemy()
         this.enemyTimer = 0
       } else {
         this.enemyTimer += deltaTime
       }
     }
-    draw(context) {
-      this.background.draw(context)
-      this.player.draw(context)
-      this.ui.draw(context)
-      this.particles.forEach((particle) => particle.draw(context))
-      this.enemies.forEach((enemy) => enemy.draw(context))
-      this.background.layer4.draw(context)
+
+    checkCollision(rect1, rect2) {
+      return (
+        rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.height + rect1.y > rect2.y
+      )
     }
-    addEnemy() {
+    createEnemy() {
       const randomize = Math.random()
       if (randomize < 0.5) {
         this.enemies.push(new Angler1(this))
@@ -561,13 +593,33 @@ window.addEventListener("load", function () {
         this.enemies.push(new HiveWhale(this))
       } else this.enemies.push(new Angler2(this))
     }
-    checkCollision(rect1, rect2) {
-      return (
-        rect1.x < rect2.x + rect2.width &&
-        rect1.x + rect1.width > rect2.x &&
-        rect1.y < rect2.y + rect2.height &&
-        rect1.height + rect1.y > rect2.y
+    createParticle() {
+      this.particles.forEach((particle) => particle.update())
+      this.particles = this.particles.filter(
+        (particle) => !particle.markedForDeletion
       )
+    }
+    createExplosion() {
+      this.explosions.forEach((explosion) => explosion.update())
+      this.explosions = this.explosions.filter(
+        (explosion) => !explosion.markedForDeletion
+      )
+    }
+    restoreAmmo(deltaTime) {
+      if (this.ammoTimer > this.ammoInterval) {
+        if (this.ammo < this.maxAmmo) this.ammo++
+        this.ammoTimer = 0
+      } else {
+        this.ammoTimer += deltaTime
+      }
+    }
+    draw(context) {
+      this.background.draw(context)
+      this.player.draw(context)
+      this.ui.draw(context)
+      this.particles.forEach((particle) => particle.draw(context))
+      this.enemies.forEach((enemy) => enemy.draw(context))
+      this.background.layer4.draw(context)
     }
   }
   //! new keyword will look for class with that name. It will find it on line 32 and it will run its constructor method to create one new blank javascript object, and assign it values and properties based on the blueprint here on line 46
