@@ -4,20 +4,49 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Atlantida Explorer Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Corben:wght@700&family=Quicksand:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <div class="container flex">
-      <button id="startButton">Start Game</button>
-      <button id="stopButton">Stop Game</button>
-      <button>Restart Game</button>
+    <div id="startWindow" class="container">
+      <div class="innerContainer">
+        <h1>Atlantida Explorer</h1>
+        <div id="playerImage"></div>
+        <h3>
+          In the depths of Atlantis, there is a thrilling mission that takes
+          place inside a submarine. Players must navigate the treacherous waters
+          of the sunken city, using their wits and cunning to outmaneuver their
+          opponents. Who will emerge as the champion of Atlandida? Only the
+          bravest and most skilled warriors will find out.
+        </h3>
+      </div>
     </div>
-
-    <canvas id="canvas1"> </canvas>
+    <div id="instructionsWindow" class="container d-none">
+      <div class="innerContainer">
+        <h1>Instruções</h1>
+        <h3>
+          Use the arrow keys to move your character or object. Use the space key
+          to fire against your enemies
+        </h3>
+      </div>
+    </div>
+    <div id="gameOverWindow" class="container d-none"></div>
+    <canvas id="canvas1" class="d-none"> </canvas>
     <!-- characters -->
-    <img id="player" src="assets/player.png" alt="player" />
     <img id="player1" src="assets/player1.png" alt="player1" />
+    <img id="player" src="assets/player.png" alt="player" />
     <img id="angler1" src="assets/angler1.png" alt="angler1" />
     <img id="angler2" src="assets/angler2.png" alt="angler2" />
     <img id="lucky" src="assets/lucky.png" alt="lucky" />
@@ -45,6 +74,14 @@
     <img id="layer2" src="assets/newlayer2.png" alt="layer2" />
 
     <img id="layer4" src="assets/newlayer3.png" alt="layer4" />
+
+    <div class="buttonContainer">
+      <button id="startButton" class="button">Start Game</button>
+      <button id="stopButton" class="button d-none">Stop Game</button>
+      <button id="resetButton" class="button d-none">Restart Game</button>
+      <button id="instructionsButton" class="button">Instructions</button>
+      <button id="mainMenuButton" class="button d-none">Main Menu</button>
+    </div>
   </body>
   <script src="index.js"></script>
 </html>

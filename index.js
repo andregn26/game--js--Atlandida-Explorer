@@ -1,5 +1,14 @@
+//Buttons
 let startButton = document.getElementById("startButton")
 let stopButton = document.getElementById("stopButton")
+let resetButton = document.getElementById("resetButton")
+let instructionsButton = document.getElementById("instructionsButton")
+let mainMenuButton = document.getElementById("mainMenuButton")
+
+//Menus
+let startWindow = document.getElementById("startWindow")
+let instructionsWindow = document.getElementById("instructionsWindow")
+let gameOverWindow = document.getElementById("gameOverWindow")
 
 window.addEventListener("load", function () {
   const canvas = this.document.getElementById("canvas1")
@@ -709,6 +718,14 @@ window.addEventListener("load", function () {
     animate(0)
     startButton.disabled = true
     stopButton.disabled = false
+    startWindow.classList.add("d-none")
+    instructionsWindow.classList.add("d-none")
+    canvas.classList.remove("d-none")
+    instructionsButton.classList.add("d-none")
+    resetButton.classList.remove("d-none")
+    stopButton.classList.remove("d-none")
+    mainMenuButton.classList.add("d-none")
+    startButton.innerHTML = "Continue Game"
   })
   stopButton.addEventListener("click", (e) => {
     e.preventDefault()
@@ -717,5 +734,21 @@ window.addEventListener("load", function () {
     console.log(cancelAnimationFrame(requestId))
     startButton.disabled = false
     stopButton.disabled = true
+  })
+  resetButton.addEventListener("click", () => {
+    location.reload()
+  })
+  instructionsButton.addEventListener("click", () => {
+    startWindow.classList.add("d-none")
+    instructionsWindow.classList.remove("d-none")
+    stopButton.classList.add("d-none")
+    mainMenuButton.classList.remove("d-none")
+    instructionsButton.classList.add("d-none")
+  })
+  mainMenuButton.addEventListener("click", () => {
+    startWindow.classList.remove("d-none")
+    instructionsWindow.classList.add("d-none")
+    mainMenuButton.classList.add("d-none")
+    instructionsButton.classList.remove("d-none")
   })
 })

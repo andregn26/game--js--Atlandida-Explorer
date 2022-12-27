@@ -3,15 +3,128 @@
   padding: 0;
   box-sizing: border-box;
 }
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+  color: rgb(192, 244, 215);
+  background-color: rgb(192, 244, 215);
+  font-family: "Quicksand", sans-serif;
+}
+h1 {
+  font-family: "Corben", cursive;
+  font-size: 64px;
+}
+h3 {
+  font-weight: 300;
+}
+svg {
+  z-index: 100;
+}
 
-#canvas1 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  /* doing this will make sure we can always see the entire canvas element even when the browser window is too small */
+.container {
+  background-color: rgb(19, 1, 108);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  height: 500px;
   max-width: 100%;
   max-height: 100%;
+  justify-content: center;
+}
+.innerContainer {
+  width: 80%;
+  gap: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+@media only screen and (max-width: 600px) {
+  .innerContainer {
+    width: 950%;
+  }
+}
+.buttonContainer {
+  width: 90%;
+  display: flex;
+  height: 100px;
+  align-items: flex-end;
+  gap: 15px;
+  justify-content: center;
+}
+.button {
+  background-color: rgb(224, 185, 65);
+  color: rgb(38, 60, 118);
+  align-items: center;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(0.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.button:hover,
+.button:focus {
+  background-color: #fb8332;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button:active {
+  background-color: #c85000;
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  transform: translateY(0);
+}
+.button:disabled {
+  background-color: rgb(220, 203, 153);
+  color: rgb(105, 111, 129);
+
+  transform: translateY(0);
+}
+
+#canvas1 {
+  /* doing this will make sure we can always see the entire canvas element even when the browser window is too small */
+  max-width: 90%;
+  max-height: 100%;
+}
+
+#playerImage {
+  width: 190px;
+  margin: 1.2rem;
+  height: 90px;
+  background: transparent url("./assets/imagemain.png");
+  animation: run 1s steps(24) infinite;
+}
+@keyframes run {
+  100% {
+    background-position: -4584px, 0;
+  }
 }
 
 #layer1,
@@ -34,4 +147,8 @@
 .flex {
   display: flex;
   justify-content: center;
+}
+
+.d-none {
+  display: none;
 }
