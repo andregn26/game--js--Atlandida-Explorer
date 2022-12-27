@@ -5,12 +5,10 @@
 }
 
 #canvas1 {
-  border: 5px solid black;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: blue;
   /* doing this will make sure we can always see the entire canvas element even when the browser window is too small */
   max-width: 100%;
   max-height: 100%;
@@ -21,6 +19,7 @@
 #layer3,
 #layer4,
 #player,
+#player1,
 #angler1,
 #angler2,
 #lucky,
@@ -31,4 +30,8 @@
 #fireExplosion,
 #smokeExplosion {
   display: none;
+}
+.flex {
+  display: flex;
+  justify-content: center;
 }

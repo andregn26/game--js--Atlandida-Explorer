@@ -1,3 +1,6 @@
+let startButton = document.getElementById("startButton")
+let stopButton = document.getElementById("stopButton")
+
 window.addEventListener("load", function () {
   const canvas = this.document.getElementById("canvas1")
   const ctx = canvas.getContext("2d")
@@ -28,7 +31,7 @@ window.addEventListener("load", function () {
         if (this.game.keys.indexOf(e.key) > -1) {
           this.game.keys.splice(this.game.keys.indexOf(e.key), 1)
         }
-        // console.log(this.game.keys)
+        console.log(this.game.keys)
       })
     }
   }
@@ -112,22 +115,25 @@ window.addEventListener("load", function () {
   class Player {
     constructor(game) {
       this.game = game
-      this.width = 120
-      this.height = 190
+      this.width = 191
+      this.height = 92
       this.x = 20
       this.y = 100
       this.frameX = 0
       this.frameY = 0
-      this.maxFrame = 37
+      this.maxFrame = 23
       this.speedY = 0
       this.speedX = 0
       this.maxSpeedY = 0.1
       this.maxSpeedX = 0.3
       this.projectiles = []
-      this.image = document.getElementById("player")
+      this.image = document.getElementById("player1")
       this.powerUp = false
       this.powerUpTimer = 0
       this.powerUpLimit = 10000
+      this.timer = 0
+      this.fps = 30
+      this.interval = 1000 / this.fps
     }
     update(deltaTime) {
       if (this.game.keys.includes("ArrowUp")) {
@@ -160,11 +166,17 @@ window.addEventListener("load", function () {
         (projectile) => !projectile.markedForDeletion
       )
       //animate Sprite
-      if (this.frameX < this.maxFrame) {
-        this.frameX++
+      if (this.timer > this.interval) {
+        if (this.frameX < this.maxFrame) {
+          this.frameX++
+          this.timer = 0
+        } else {
+          this.frameX = 0
+        }
       } else {
-        this.frameX = 0
+        this.timer += deltaTime
       }
+
       //powerUp
       if (this.powerUp) {
         if (this.powerUpTimer > this.powerUpLimit) {
@@ -177,6 +189,7 @@ window.addEventListener("load", function () {
           this.game.ammo += 0.1
         }
       }
+      console.log(this.interval)
     }
     draw(context) {
       if (this.game.debug) {
@@ -414,13 +427,11 @@ window.addEventListener("load", function () {
       this.game = game
       this.image1 = document.getElementById("layer1")
       this.image2 = document.getElementById("layer2")
-      this.image3 = document.getElementById("layer3")
       this.image4 = document.getElementById("layer4")
       this.layer1 = new Layer(this.game, this.image1, 0.2)
       this.layer2 = new Layer(this.game, this.image2, 0.4)
-      this.layer3 = new Layer(this.game, this.image3, 1)
       this.layer4 = new Layer(this.game, this.image4, 1.5)
-      this.layers = [this.layer1, this.layer2, this.layer3]
+      this.layers = [this.layer1, this.layer2, this.layer4]
     }
     update() {
       this.layers.forEach((layer) => layer.update())
@@ -679,6 +690,7 @@ window.addEventListener("load", function () {
 
   //! last time job will be to store a value of timestamp from the previous animation loop so that we can compare it against the value of timestamp from this animation loop this difference will give us delta time the difference in milliseconds between the timestamp from this loop and the timestamp from the previous loop
   let lastTime = 0
+  let requestId
 
   //animation loop
   function animate(timeStamp) {
@@ -689,8 +701,21 @@ window.addEventListener("load", function () {
     game.draw(ctx)
     game.update(deltaTime)
 
-    requestAnimationFrame(animate)
+    requestId = requestAnimationFrame(animate)
   }
 
-  animate(0)
+  startButton.addEventListener("click", (e) => {
+    e.preventDefault()
+    animate(0)
+    startButton.disabled = true
+    stopButton.disabled = false
+  })
+  stopButton.addEventListener("click", (e) => {
+    e.preventDefault()
+
+    cancelAnimationFrame(requestId)
+    console.log(cancelAnimationFrame(requestId))
+    startButton.disabled = false
+    stopButton.disabled = true
+  })
 })
