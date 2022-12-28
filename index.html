@@ -37,21 +37,26 @@
       <div class="innerContainer">
         <h1>Instruções</h1>
         <h3>
-          Use the arrow keys to move your character or object. Use the space key
-          to fire against your enemies
+          ↑ (FORWARD) <br />
+          ↓ (BACKWARDS)<br />
+          ← (BACKWARDS)<br />
+          → (FORWARD)<br />
+          SPACEBAR (SHOOT).
         </h3>
+        <p>
+          Destroy enemies to gain points. Reach 300 points to win. Each time
+          that your submarine collides with an enemy, you loose points
+        </p>
       </div>
     </div>
-    <div id="gameOverWindow" class="container d-none"></div>
     <canvas id="canvas1" class="d-none"> </canvas>
     <!-- characters -->
     <img id="player1" src="assets/player1.png" alt="player1" />
-    <img id="player" src="assets/player.png" alt="player" />
-    <img id="angler1" src="assets/angler1.png" alt="angler1" />
-    <img id="angler2" src="assets/angler2.png" alt="angler2" />
-    <img id="lucky" src="assets/treasure.png" alt="lucky" />
-    <img id="hiveWhale" src="assets/hivewhale.png" alt="hiveWhale" />
-    <img id="drone" src="assets/drone.png" alt="drone" />
+    <img id="mediumEnemy1" src="assets/mediumEnemy1.png" alt="mediumEnemy1" />
+    <img id="mediumEnemy2" src="assets/mediumEnemy2.png" alt="mediumEnemy2" />
+    <img id="treasure" src="assets/treasure.png" alt="treasure" />
+    <img id="bigEnemy" src="assets/bigEnemy.png" alt="bigEnemy" />
+    <img id="smallEnemy" src="assets/smallEnemy.png" alt="smallEnemy" />
     <!-- props -->
     <img id="projectile" src="assets/projectile.png" alt="projectile" />
     <img id="gears" src="assets/gears.png" alt="gears" />
@@ -66,13 +71,8 @@
       alt="fireExplosion"
     />
     <!-- environment -->
-    <!-- <img id="layer1" src="assets/layer1.png" alt="layer1" />
-    <img id="layer2" src="assets/layer2.png" alt="layer2" />
-    <img id="layer3" src="assets/layer3.png" alt="layer3" />
-    <img id="layer4" src="assets/layer4.png" alt="layer4" /> -->
     <img id="layer1" src="assets/newlayer1.png" alt="layer1" />
     <img id="layer2" src="assets/newlayer2.png" alt="layer2" />
-
     <img id="layer4" src="assets/newlayer3.png" alt="layer4" />
 
     <div class="buttonContainer">

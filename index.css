@@ -130,13 +130,13 @@ h3 {
 #layer4,
 #player,
 #player1,
-#angler1,
-#angler2,
-#lucky,
+#mediumEnemy1,
+#mediumEnemy2,
+#treasure,
 #projectile,
 #gears,
-#hiveWhale,
-#drone,
+#bigEnemy,
+#smallEnemy,
 #fireExplosion,
 #smokeExplosion {
   display: none;

@@ -8,7 +8,6 @@ let mainMenuButton = document.getElementById("mainMenuButton")
 //Menus
 let startWindow = document.getElementById("startWindow")
 let instructionsWindow = document.getElementById("instructionsWindow")
-let gameOverWindow = document.getElementById("gameOverWindow")
 
 window.addEventListener("load", function () {
   const canvas = this.document.getElementById("canvas1")
@@ -40,7 +39,6 @@ window.addEventListener("load", function () {
         if (this.game.keys.indexOf(e.key) > -1) {
           this.game.keys.splice(this.game.keys.indexOf(e.key), 1)
         }
-        console.log(this.game.keys)
       })
     }
   }
@@ -127,7 +125,7 @@ window.addEventListener("load", function () {
       this.width = 191
       this.height = 92
       this.x = 20
-      this.y = 100
+      this.y = 170
       this.frameX = 0
       this.frameY = 0
       this.maxFrame = 23
@@ -283,32 +281,32 @@ window.addEventListener("load", function () {
       )
     }
   }
-  class Angler1 extends Enemy {
+  class MediumEnemy1 extends Enemy {
     constructor(game) {
       super(game)
-      this.width = 228
-      this.height = 169
+      this.width = 128
+      this.height = 93
       this.lives = 2
       this.score = this.lives
       this.y = Math.random() * (this.game.height * 0.95 - this.height)
-      this.image = document.getElementById("angler1")
-      this.frameY = Math.floor(Math.random() * 3)
+      this.image = document.getElementById("mediumEnemy1")
+      this.frameY = 0
     }
   }
-  class Angler2 extends Enemy {
+  class MediumEnemy2 extends Enemy {
     constructor(game) {
       super(game)
       this.game = game
-      this.width = 213
-      this.height = 165
+      this.width = 123
+      this.height = 121
       this.lives = 3
       this.score = this.lives
       this.y = Math.random() * this.game.height * 0.95 - this.height
-      this.image = document.getElementById("angler2")
-      this.frameY = Math.floor(Math.random() * 2)
+      this.image = document.getElementById("mediumEnemy2")
+      this.frameY = 0
     }
   }
-  class luckyFish extends Enemy {
+  class Treasure extends Enemy {
     constructor(game) {
       super(game)
       this.game = game
@@ -317,40 +315,40 @@ window.addEventListener("load", function () {
       this.lives = 3
       this.score = 15
       this.y = Math.random() * this.game.height * 0.95 - this.height
-      this.image = document.getElementById("lucky")
+      this.image = document.getElementById("treasure")
       this.frameY = 0
-      this.type = "lucky"
+      this.type = "treasure"
     }
   }
-  class HiveWhale extends Enemy {
+  class BigEnemy extends Enemy {
     constructor(game) {
       super(game)
       this.game = game
-      this.width = 400
-      this.height = 227
-      this.lives = 15
+      this.width = 320
+      this.height = 181
+      this.lives = 20
       this.score = this.lives
       this.y = Math.random() * this.game.height * 0.95 - this.height
-      this.image = document.getElementById("hiveWhale")
+      this.image = document.getElementById("bigEnemy")
       this.frameY = 0
       this.type = "hive"
-      this.speedX = Math.random() * -1.2 - 0.2
+      this.speedX = Math.random() * -0.4 - 0.2
     }
   }
 
-  class Drone extends Enemy {
+  class SmallEnemy extends Enemy {
     constructor(game, x, y) {
       super(game)
       this.game = game
       this.width = 115
-      this.height = 95
+      this.height = 36
       this.lives = 3
       this.score = this.lives
       this.y = y
       this.x = x
-      this.image = document.getElementById("drone")
-      this.frameY = Math.floor(Math.random() * 2)
-      this.type = "drone"
+      this.image = document.getElementById("smallEnemy")
+      this.frameY = 0
+      this.type = "smallEnemy"
       this.speedX = Math.random() * -4.2 - 1.2
     }
   }
@@ -395,7 +393,6 @@ window.addEventListener("load", function () {
         this.timer += deltaTime
       }
       if (this.frameX > this.maxFrame) this.markedForDeletion = true
-      console.log(this.timer)
     }
     draw(context) {
       context.drawImage(
@@ -478,7 +475,7 @@ window.addEventListener("load", function () {
         if (this.game.score > this.game.winningScore) {
           context.textAlign = "center"
           message1 = "You Won!"
-          message2 = `well done! You destroyed ${this.game.score / 5} enemies`
+          message2 = `well done!`
         } else {
           message1 = "You Loose"
           message2 = `try again `
@@ -499,8 +496,10 @@ window.addEventListener("load", function () {
 
       //amo
       if (this.game.player.powerUp) context.fillStyle = "#ffffbd"
-      for (let i = 0; i < this.game.ammo; i++) {
-        context.fillRect(5 * i + 20, 50, 3, 20)
+      if (!this.game.gameOver) {
+        for (let i = 0; i < this.game.ammo; i++) {
+          context.fillRect(5 * i + 20, 50, 3, 20)
+        }
       }
 
       context.restore()
@@ -529,7 +528,7 @@ window.addEventListener("load", function () {
       this.enemyInterval = 1000
       this.gameOver = false
       this.score = 0
-      this.winningScore = 400
+      this.winningScore = 300
       this.gameTime = 0
       this.timeLimit = 60000
       this.speed = 1
@@ -545,13 +544,15 @@ window.addEventListener("load", function () {
     }
     addEnemiesToArray() {
       const randomize = Math.random()
-      if (randomize < 0.4) {
-        this.enemies.push(new Angler1(this))
+      if (randomize < 0.3) {
+        this.enemies.push(new MediumEnemy1(this))
       } else if (randomize < 0.6) {
-        this.enemies.push(new luckyFish(this))
-      } else if (randomize < 0.3) {
-        this.enemies.push(new HiveWhale(this))
-      } else this.enemies.push(new Angler2(this))
+        this.enemies.push(new MediumEnemy2(this))
+      } else if (randomize < 0.8) {
+        this.enemies.push(new Treasure(this))
+      } else if (randomize < 1) {
+        this.enemies.push(new BigEnemy(this))
+      }
     }
     addExplosionsToArray(enemy) {
       const randomize = Math.random()
@@ -593,9 +594,11 @@ window.addEventListener("load", function () {
             )
           }
           enemy.markedForDeletion = true
-          if (enemy.type === "lucky") {
-            this.player.enterPowerUp()
-          } else this.score--
+          if (!this.gameOver) {
+            if (enemy.type === "treasure") {
+              this.player.enterPowerUp()
+            } else this.score -= enemy.lives
+          }
         }
         this.player.projectiles.forEach((projectile) => {
           if (this.checkCollision(projectile, enemy)) {
@@ -615,7 +618,7 @@ window.addEventListener("load", function () {
               if (enemy.type === "hive") {
                 for (let i = 0; i < 5; i++) {
                   this.enemies.push(
-                    new Drone(
+                    new SmallEnemy(
                       this,
                       enemy.x + Math.random() * enemy.width,
                       enemy.y + Math.random() * enemy.height
@@ -634,9 +637,6 @@ window.addEventListener("load", function () {
               }
               if (!this.gameOver) {
                 this.score += enemy.score
-              }
-              if (this.score > this.winningScore) {
-                this.gameOver = true
               }
             }
           }
@@ -668,8 +668,9 @@ window.addEventListener("load", function () {
       if (!this.gameOver) {
         this.gameTime += deltaTime
       }
-      if (this.gameTime > this.timeLimit) {
+      if (this.gameTime > this.timeLimit || this.score < 0) {
         this.gameOver = true
+        this.ammo = 0
       }
       this.background.update()
       this.background.layer4.update()
@@ -737,9 +738,7 @@ window.addEventListener("load", function () {
   stopButton.addEventListener("click", (e) => {
     e.preventDefault()
     e.stopPropagation()
-
     cancelAnimationFrame(requestId)
-    console.log(cancelAnimationFrame(requestId))
     startButton.disabled = false
     stopButton.disabled = true
   })
