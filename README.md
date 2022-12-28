@@ -17,7 +17,7 @@
     In the depths of Atlantis, there is a thrilling mission that takes place inside a submarine. Players must navigate the treacherous waters of the sunken city, using their wits and cunning to outmaneuver their opponents. Who will emerge as the champion of Atlandida? Only the bravest and most skilled warriors will find out.
     <br />
     <br />
-    <a href="https://github.com/andregn26/souldance">View Demo</a>
+    <a href="https://andregn26.github.io/game--js--Atlandida-Explorer/">View Demo</a>
     ·
     <a href="https://github.com/andregn26/souldance/issues">Report Bug</a>
     
