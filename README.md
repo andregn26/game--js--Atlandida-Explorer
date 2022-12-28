@@ -19,7 +19,7 @@
     <br />
     <a href="https://andregn26.github.io/game--js--Atlandida-Explorer/" target="_blank">View Demo</a>
     ·
-    <a href="https://github.com/andregn26/souldance/issues">Report Bug</a>
+    <a href="https://github.com/andregn26/game--js--Atlandida-Explorer/issues">Report Bug</a>
     
   </p>
 </div>
@@ -33,6 +33,8 @@
 * [![JavaScript][JavaScript-shield]][JavaScript-url]
 * [![Css][Css-shield]][Css-url]
 * [![Html][Html-shield]][Css-url]
+* [![DragonBones][Dragonbones-shield]][Dragonbones-url]
+* [![Illustrator][Illustrator-shield]][Illustrator-url]
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
@@ -52,4 +54,8 @@
 [Css-url]: https://www.w3.org/Style/CSS/Overview.en.html
 [Html-shield]: https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=E34F26&logoWidth=30&labelColor=black&style=for-the-badge
 [Html-url]: https://www.w3.org/html/
-[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
+[Dragonbones-shield]: https://img.shields.io/badge/-DragonBones-81D665?&style=for-the-badge
+[Dragonbones-url]: https://docs.egret.com/dragonbones/en
+[Illustrator-shield]: https://img.shields.io/badge/-Adobe%20Illustrator-FF9A00?logo=Adobe%20Illustrator&logoColor=FF9A00&logoWidth=30&labelColor=black&style=for-the-badge
+[Illustrator-url]: https://www.adobe.com/pt/products/illustrator.html?gclid=CjwKCAiA76-dBhByEiwAA0_s9WDcA3kEU--ddsMk8npKNcRNgAdJmgu6v2Krz8Mss2VMOMfO8OOj8BoCDxQQAvD_BwE&mv=search&mv=search&sdid=KCJMVLF6&ef_id=CjwKCAiA76-dBhByEiwAA0_s9WDcA3kEU--ddsMk8npKNcRNgAdJmgu6v2Krz8Mss2VMOMfO8OOj8BoCDxQQAvD_BwE:G:s&s_kwcid=AL!3085!3!596406827930!e!!g!!illustrator!1479761007!62724397572
+
