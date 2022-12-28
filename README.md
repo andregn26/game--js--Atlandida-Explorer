@@ -3,14 +3,18 @@
 <br />
 
 <p align="center">
-  <img src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png" alt="animated" />
+  
 </p>
 <div align="center">
 
-<h3 align="center">Atlantida Explorer</h3>
-
+<h1 align="center">Atlantida Explorer</h1>
+<br />
+<img src="https://github.com/andregn26/game--js--Atlandida-Explorer/blob/main/assets/subgif.gif" width="200" alt="animated" />
+    <br />
+    <br />
+    <br />
   <p align="center">
-    project_description
+    In the depths of Atlantis, there is a thrilling mission that takes place inside a submarine. Players must navigate the treacherous waters of the sunken city, using their wits and cunning to outmaneuver their opponents. Who will emerge as the champion of Atlandida? Only the bravest and most skilled warriors will find out.
     <br />
     <br />
     <a href="https://github.com/andregn26/souldance">View Demo</a>
