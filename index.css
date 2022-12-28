@@ -21,10 +21,6 @@ h1 {
 h3 {
   font-weight: 300;
 }
-svg {
-  z-index: 100;
-}
-
 .container {
   background-color: rgb(19, 1, 108);
   display: flex;
@@ -47,7 +43,7 @@ svg {
 }
 @media only screen and (max-width: 600px) {
   .innerContainer {
-    width: 950%;
+    width: 95%;
   }
 }
 .buttonContainer {
@@ -112,6 +108,7 @@ svg {
   /* doing this will make sure we can always see the entire canvas element even when the browser window is too small */
   max-width: 90%;
   max-height: 100%;
+  font-family: "Corben", cursive;
 }
 
 #playerImage {

@@ -198,7 +198,6 @@ window.addEventListener("load", function () {
           this.game.ammo += 0.1
         }
       }
-      console.log(this.interval)
     }
     draw(context) {
       if (this.game.debug) {
@@ -251,16 +250,17 @@ window.addEventListener("load", function () {
       this.markedForDeletion = false
       this.frameX = 0
       this.frameY = 0
-      this.maxFrame = 37
+      // this.maxFrame = 0
     }
     update() {
       this.x += this.speedX - this.game.speed
       if (this.x + this.width < 0) {
         this.markedForDeletion = true
       }
-      if (this.frameX < this.maxFrame) {
-        this.frameX++
-      } else this.frameX = 0
+      //! uncoment this code when all the spriteshhets are ready
+      // if (this.frameX < this.maxFrame) {
+      //   this.frameX++
+      // } else this.frameX = 0
     }
     draw(context) {
       if (this.game.debug) {
@@ -318,7 +318,7 @@ window.addEventListener("load", function () {
       this.score = 15
       this.y = Math.random() * this.game.height * 0.95 - this.height
       this.image = document.getElementById("lucky")
-      this.frameY = Math.floor(Math.random() * 2)
+      this.frameY = 0
       this.type = "lucky"
     }
   }
@@ -453,7 +453,7 @@ window.addEventListener("load", function () {
     constructor(game) {
       this.game = game
       this.fontSize = 25
-      this.fontFamily = "Helvetica"
+      this.fontFamily = "Corben"
       this.color = "white"
     }
     draw(context) {
@@ -463,7 +463,7 @@ window.addEventListener("load", function () {
       context.shadowOffsetY = 2
       context.shadowColor = "black"
       context.fillStyle = this.color
-      context.font = `${this.fontSize}px ${this.fontFamlily}`
+      context.font = `${this.fontSize}px ${this.fontFamily}`
       context.fillText(`Score ${this.game.score}`, 20, 40)
 
       //Timer
@@ -522,6 +522,7 @@ window.addEventListener("load", function () {
       this.explosions = []
       this.ammo = 20
       this.maxAmmo = 50
+      this.maxAmmoPowerUp = 75
       this.ammoTimer = 0
       this.ammoInterval = 500
       this.enemyTimer = 0
@@ -544,11 +545,11 @@ window.addEventListener("load", function () {
     }
     addEnemiesToArray() {
       const randomize = Math.random()
-      if (randomize < 0.5) {
+      if (randomize < 0.4) {
         this.enemies.push(new Angler1(this))
       } else if (randomize < 0.6) {
         this.enemies.push(new luckyFish(this))
-      } else if (randomize < 0.8) {
+      } else if (randomize < 0.3) {
         this.enemies.push(new HiveWhale(this))
       } else this.enemies.push(new Angler2(this))
     }
@@ -696,26 +697,32 @@ window.addEventListener("load", function () {
   }
   //! new keyword will look for class with that name. It will find it on line 32 and it will run its constructor method to create one new blank javascript object, and assign it values and properties based on the blueprint here on line 46
   const game = new Game(canvas.width, canvas.height)
-
   //! last time job will be to store a value of timestamp from the previous animation loop so that we can compare it against the value of timestamp from this animation loop this difference will give us delta time the difference in milliseconds between the timestamp from this loop and the timestamp from the previous loop
   let lastTime = 0
   let requestId
 
   //animation loop
-  function animate(timeStamp) {
-    //! delta time is the difference in milliseconds between the timestamp from this loop and the timestamp from the previous loop
+  let animate = (timeStamp) => {
     const deltaTime = timeStamp - lastTime
     lastTime = timeStamp
+
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     game.draw(ctx)
     game.update(deltaTime)
-
     requestId = requestAnimationFrame(animate)
   }
 
-  startButton.addEventListener("click", (e) => {
-    e.preventDefault()
+  function startGame() {
+    //! delta time is the difference in milliseconds between the timestamp from this loop and the timestamp from the previous loop
+
     animate(0)
+  }
+
+  startButton.addEventListener("click", (e) => {
+    startGame()
+    e.preventDefault()
+    e.stopPropagation()
+
     startButton.disabled = true
     stopButton.disabled = false
     startWindow.classList.add("d-none")
@@ -729,26 +736,29 @@ window.addEventListener("load", function () {
   })
   stopButton.addEventListener("click", (e) => {
     e.preventDefault()
+    e.stopPropagation()
 
     cancelAnimationFrame(requestId)
     console.log(cancelAnimationFrame(requestId))
     startButton.disabled = false
     stopButton.disabled = true
   })
-  resetButton.addEventListener("click", () => {
+  resetButton.addEventListener("click", (e) => {
+    e.stopPropagation()
     location.reload()
   })
-  instructionsButton.addEventListener("click", () => {
+  instructionsButton.addEventListener("click", (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    startButton.classList.add("d-none")
     startWindow.classList.add("d-none")
     instructionsWindow.classList.remove("d-none")
     stopButton.classList.add("d-none")
+    canvas.classList.add("d-none")
     mainMenuButton.classList.remove("d-none")
     instructionsButton.classList.add("d-none")
   })
-  mainMenuButton.addEventListener("click", () => {
-    startWindow.classList.remove("d-none")
-    instructionsWindow.classList.add("d-none")
-    mainMenuButton.classList.add("d-none")
-    instructionsButton.classList.remove("d-none")
+  mainMenuButton.addEventListener("click", (e) => {
+    location.reload()
   })
 })
