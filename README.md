@@ -34,21 +34,31 @@
 * [![DragonBones][Dragonbones-shield]][Dragonbones-url]
 * [![Illustrator][Illustrator-shield]][Illustrator-url]
 
+
+
 <!-- ACKNOWLEDGMENTS -->
 ## Biggest Learnings 📖
 
-With this project I wanted to deepen my knowledge of Vanilla JavaScript:
-* []() Object Oriented Programming (OOP) - concepts of object, class and methods and their use through the constructor method and functions.
-* []() Concept of Inheritance and the two types of classes - parent classes and child classes through the keywords "extend" and "super".
-* []() Class Hoisting - using the keyword "new" to declare a class
-* []() Reinforcement of logical thinking by planning the game and its features.
-* []() Reviewed DOM Manipulation concepts
-* []() "this" Keyword - learned the different contexts in which the keyword is used and how it behaves
+#### With this project I wanted to deepen my knowledge of Vanilla JavaScript:
+* []() **Object Oriented Programming** (OOP) - concepts of object, class and methods and their use through the constructor method and functions.
+* []() Concept of **Inheritance** and the two types of classes - parent classes and child classes through the keywords "extend" and "super".
+* []() Class **Hoisting** - using the keyword "new" to declare a class
+* []() Reinforcement of **logical thinking** by planning the game and its features.
+* []() Reviewed **DOM Manipulation** concepts
+* []() **"this" Keyword** - learned the different contexts in which the keyword is used and how it behaves
 
 
-* []()
-* []()
-* []()
+#### It also helped me to learn more about design tools like:
+* []() Adobe Ilustrator -  for creating the different layers of the background and the visuals for the players and enemies
+* []() DragonBones - It was my first experience with this software that allowed me to create the spritesheets for animate the player
+
+
+
+<!-- Next Steps -->
+## Next Steps :soon:
+- [ ] Create the enemies spritesheets
+- [ ] Add lifes to the player
+- [ ] Create the logic for a second level
 
 
 
