@@ -25,8 +25,6 @@
 </div>
 
 
-## Behind The Game 📖
-
 
 ## Used technologies 💿
 
@@ -37,7 +35,16 @@
 * [![Illustrator][Illustrator-shield]][Illustrator-url]
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## Biggest Learnings 📖
+
+With this project I wanted to deepen my knowledge of Vanilla JavaScript:
+* []() Object Oriented Programming (OOP) - concepts of object, class and methods and their use through the constructor method and functions.
+* []() Concept of Inheritance and the two types of classes - parent classes and child classes through the keywords "extend" and "super".
+* []() Class Hoisting - using the keyword "new" to declare a class
+* []() Reinforcement of logical thinking by planning the game and its features.
+* []() Reviewed DOM Manipulation concepts
+* []() "this" Keyword - learned the different contexts in which the keyword is used and how it behaves
+
 
 * []()
 * []()
